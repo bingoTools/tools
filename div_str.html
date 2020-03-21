@@ -1,0 +1,47 @@
+<html>
+<br>
+&nbsp;&nbsp;&nbsp;Enter the Stock Name : &nbsp;&nbsp; <input type="text" id="stock">
+<br><br>
+&nbsp;&nbsp;&nbsp;Enter the Dividend (rs.) : &nbsp;&nbsp; <input type="text" id="div">
+<br><br>
+&nbsp;&nbsp;&nbsp;Enter the Prev Close price (rs.) : &nbsp;&nbsp; <input type="text" id="prevClose">
+<br><br>
+&nbsp;&nbsp;&nbsp;Enter the Price band (e.g. 5,10,-) : &nbsp;&nbsp; <input type="text" id="band">
+<br><br>
+&nbsp;&nbsp;&nbsp;Enter Ex-div date : &nbsp;&nbsp; <input type="text" id="date">
+<br><br>
+&nbsp;&nbsp;&nbsp;<input type="button" id="done" value="Done">
+<br><br><br>
+
+<span id="div_ex"></span><br>
+<span id="yield"></span><br>
+<span id="yield_minus_1"></span><br>
+<span id="yield_minus_2"></span><br>
+<span id="yield_minus_3"></span><br>
+
+<script type="text/javascript">
+document.getElementById("done").onclick = function(){
+	var stock = document.getElementById("stock").value;
+	var div = document.getElementById("div").value;
+	var ex = document.getElementById("date").value;
+	var band = document.getElementById("band").value;
+	var prevClose = document.getElementById("prevClose").value;
+	document.getElementById("div_ex").innerText = stock + "  |  Div: " + div + "  |   Ex-date: " + ex + "  |  Band: " + band; 
+//--------
+	var price = prevClose;
+	var yieldPer = Math.round(100*100*div/prevClose)/100;
+	document.getElementById("yield").innerText = "Rs." + price + " |   " + yieldPer + "%";
+	yieldPer = Math.floor(yieldPer);
+	price = Math.round(100*div*100/yieldPer)/100;
+	document.getElementById("yield_minus_1").innerText = "Rs." + price + " |  " + yieldPer + "%";
+	yieldPer--;
+	price = Math.round(100*div*100/yieldPer)/100;
+	document.getElementById("yield_minus_2").innerText = "Rs." + price + " |  " + yieldPer + "%";
+	yieldPer--;
+	price = Math.round(100*div*100/yieldPer)/100;
+	document.getElementById("yield_minus_3").innerText = "Rs." + price + " |  " + yieldPer + "%";
+}
+</script>
+
+
+</html>
