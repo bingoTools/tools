@@ -1,0 +1,69 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<div id="showHere"></div>
+<script>
+date = new Date();
+var day = date.getDate();
+var month = date.getMonth() + 1; 
+if(month < 10){
+	month = "0" + month;
+}
+if(day < 10){
+	day = "0" + day;
+}
+const year = date.getFullYear();
+date = ""+year+""+month+day;
+var fullContent = "";
+function triggerAPI(page){
+	var url = "https://api.bseindia.com/BseIndiaAPI/api/AnnGetData/w?pageno="+page+"&strCat=-1&strPrevDate=" +date+ "&strScrip=&strSearch=P&strToDate=" +date+"&strType=C";
+	$.ajax({
+		url : url,
+		success : function(dataJson){
+			var tmp = dataJson.Table;
+			if(tmp.length == 0){
+				jQuery("#showHere").html(fullContent);
+				alert("Done");
+			}
+			else{
+				for(var i=0; i< tmp.length; i++){
+					let NEWSSUB = tmp[i]["NEWSSUB"];
+					let HEADLINE = tmp[i]["HEADLINE"];
+					let CATEGORYNAME = tmp[i]["CATEGORYNAME"];
+					let flag = false;
+					if(NEWSSUB != null && (NEWSSUB.indexOf("Buy") != -1 || NEWSSUB.indexOf("buy") != -1)){
+						flag = true;
+					}
+					else if(HEADLINE != null && (HEADLINE.indexOf("Buy") != -1 || HEADLINE.indexOf("buy") != -1)){
+						flag = true;
+					}
+					else if(CATEGORYNAME != null && (CATEGORYNAME.indexOf("Buy") != -1 || CATEGORYNAME.indexOf("buy") != -1)){
+						flag = true;
+					}
+					if(flag){
+						for(var j=0; j<Object.keys(tmp[i]).length; j++){
+							fullContent += Object.keys(tmp[i])[j];
+							fullContent += " : ";
+							fullContent += tmp[i][Object.keys(tmp[i])[j]];
+							fullContent += "<br>";
+							jQuery("#showHere").html(fullContent);
+						}
+						fullContent += "<br><br><br><hr>";
+					}
+				}
+				triggerAPI(++page);
+			}
+		}
+
+	});	
+}
+triggerAPI(1);
+</script>
+
+
+</body>
+</html>
+
+
