@@ -42,6 +42,9 @@ function triggerAPI(page){
 					else if(CATEGORYNAME != null && (CATEGORYNAME.indexOf("Buy") != -1 || CATEGORYNAME.indexOf("buy") != -1)){
 						flag = true;
 					}
+					if(NEWSSUB != null && (NEWSSUB.indexOf("Daily Buy Back of equity shares") != -1)){
+						flag = false;	
+					}
 					if(flag){
 						for(var j=0; j<Object.keys(tmp[i]).length; j++){
 							fullContent += Object.keys(tmp[i])[j];
