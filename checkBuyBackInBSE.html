@@ -3,6 +3,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
+<div id="CompanyNameHere"></div>
+<br><hr>
 <div id="showHere"></div>
 <script>
 date = new Date();
@@ -54,6 +56,7 @@ function triggerAPI(page){
 							jQuery("#showHere").html(fullContent);
 						}
 						fullContent += "<br><br><br><hr>";
+						jQuery("#CompanyNameHere").append(tmp[i]["SLONGNAME"] + "<br>");
 					}
 				}
 				triggerAPI(++page);
